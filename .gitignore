@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
+
+# dotenv environment variable file
+.env
+
+# React build output
+/client/build/
+client/.env
+
+# Server build output (if applicable, e.g., using Babel or TypeScript)
+server/dist/
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor folders/files
+.vscode/
+.idea/
+*.swp
+
+# Coverage directory used by testing tools
+coverage/
+
+# Optional: If using Docker
+docker-compose.override.yml
+
+# Optional: If using package-lock.json
+package-lock.json
