@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-require("dotenv").config({ path: require("path").resolve(__dirname, "../.env") });
+require("dotenv").config({ path: require("path").resolve(__dirname, "../../.env") });
 const uri = `mongodb+srv://
             ${process.env.DATABASE_USERNAME}:
             ${process.env.DATABASE_PASSWORD}

@@ -10,9 +10,12 @@ yarn-error.log
 # React build output
 /client/build/
 client/.env
+client/node_modules
 
 # Server build output (if applicable, e.g., using Babel or TypeScript)
 server/dist/
+server/.env
+server/node_modules
 
 # Log files
 *.log
