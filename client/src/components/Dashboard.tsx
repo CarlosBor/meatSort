@@ -7,6 +7,7 @@ const Dashboard = () =>{
             <nav>
                 <ul>
                     <li><Link to="/dashboard/apikey">API Keys</Link></li>
+                    <li><Link to="/dashboard/jobs">Jobs</Link></li>
                 </ul>
             </nav>
 

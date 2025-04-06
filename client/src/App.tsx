@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
 import ApiKeyPage from './components/ApiKeyPage';
+import Jobs from './components/Jobs';
 
 import style from './App.module.css';
 
@@ -35,8 +36,9 @@ function App() {
           <SignUp />
         </div>} />
         <Route path="/dashboard/*" element={<div className={style.loginWrapper}><Dashboard /></div>}>
-            <Route path="apikey" element={<ApiKeyPage />} /> {/* Nested Route */}
-          </Route>
+          <Route path="apikey" element={<ApiKeyPage />} /> {/* Nested Route */}
+          <Route path="jobs" element={<Jobs />} /> {/* Nested Route */}
+        </Route>
       </Routes>
     </Router>
     </ThemeProvider>

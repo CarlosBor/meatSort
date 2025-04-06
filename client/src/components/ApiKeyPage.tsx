@@ -1,6 +1,6 @@
 import style from './ApiKeyPage.module.css';
 import { useState, useEffect } from 'react';
-import { TextField, Typography, Container, Box, CssBaseline, Link } from '@mui/material';
+import { TextField, Typography, Container, Box, CssBaseline } from '@mui/material';
 
 const ApiKeyPage = () =>{
     const [apiKey, setApiKey] = useState('');
@@ -15,7 +15,7 @@ const ApiKeyPage = () =>{
           }
     
           try {
-            const response = await fetch('http://localhost:5000/api/auth/apikey', {
+            const response = await fetch('http://localhost:5000/api/api/apikey', {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`, // Attach JWT
