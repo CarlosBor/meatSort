@@ -1,7 +1,6 @@
 const apiKey = '1c595ee76f76f6cde0ad8d6bf430fba9922cc7b0b3cccd9d20dbcb804962980e';
 
 const fetchTestEndpoint = async () => {  
-
   try {
     const response = await fetch('http://localhost:5000/api/api/testendpoint', {
       method: 'POST',
@@ -60,6 +59,28 @@ const fetchJobs = async () =>{
     console.error(err.message);
   }
 }
+
+//8c061d3939aab9cce1ba50434b37cc10
+
+const fetchJob = async (jobId) => {
+  try {
+    //TODO Add auth
+    const response = await fetch(`http://localhost:5000/api/job/${jobId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    console.log(jobId);
+    console.log("Goddamnit");
+    console.log(data.job);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
 // fetchTestEndpoint();
 // fetchLoremJob();
-fetchJobs();
+// fetchJobs();
+fetchJob('8c061d3939aab9cce1ba50434b37cc10');

@@ -25,8 +25,39 @@ router.post('/lorem', async (req, res) => {
   );
 
   router.get('/findjobs', async (req, res) => {
-    console.log("Whew lad");
-    res.json({ msg: "jobs queried"});
+    try {
+      const pendingJobs = await Job.find({ status: 'pending' });
+      console.log(pendingJobs);
+      if (pendingJobs.length === 0) {
+        return res.status(404).json({ msg: 'No pending jobs found.' });
+      }
+  
+      res.json({ jobs: pendingJobs });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ msg: 'Server error.' });
+    }
+
+  });
+
+  router.get('/:jobId', async (req, res) => {
+    const { jobId } = req.params;
+    console.log(jobId);
+  
+    try {
+
+      // Query for the specific job by its ID
+      const job = await Job.findOne({jobId});
+  
+      if (!job) {
+        return res.status(404).json({ msg: 'Job not found' });
+      }
+  
+      res.json({ job });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ msg: 'Server error' });
+    }
   });
 
   module.exports = router;

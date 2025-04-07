@@ -1,40 +1,50 @@
-
-
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const Jobs = () =>{
+    const [error, setError] = useState('');
+    const [jobs, setJobs] = useState([]);
+
+    useEffect(() => {
+        const fetchJobs = async () =>{
+            try {
+                const response = await fetch('http://localhost:5000/api/job/findjobs', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                });
+                const data = await response.json();
+                setJobs(data.jobs);
+                if (response.ok) {
+                console.log(data);
+                } else {
+                throw new Error(data.msg || 'Failed to validate API key');
+                }
+            } catch (err) {
+                console.error(err.message);
+            }
+            }
+            fetchJobs();
+        }, []);
+
     //I have to disclose the jobs through the API first
 
-
-
-    // const queryJobs = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //       const response = await fetch('http://localhost:5000/api/auth/login', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ email, password }),
-    //       });
-    
-    //       const data = await response.json();
-    //       console.log("This the data: ");
-    //       console.log(data);
-    //       if (!response.ok) {
-    //         setError(data.msg); // Show error message from server
-    //       } else {
-    //         // Store the JWT token and user data in localStorage/sessionStorage
-    //         localStorage.setItem('token', data.token);
-    //         // Optionally store user info as well
-    //         localStorage.setItem('user', JSON.stringify(data.user));
-    
-    //         // Redirect to the dashboard or another protected page
-    //         window.location.href = '/dashboard'; // Example route
-    //       }
-    //     } catch (error) {
-    //       setError('Failed to log in');
-    //       console.error(error);
-    //     }
-    //   };
-    
-    return(<p>Bruh what the hell</p>)
+    return(
+        <span>
+            {jobs.length === 0 ? (
+                <p>No jobs available (yet!)</p>
+            ) : (
+                <ul>
+                {jobs.map((job) => (
+                  <li key={job._id}>
+                    {/* Link to the job detail page */}
+                    <Link to={`/dashboard/jobs/${job._id}`}>{job._id}</Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+        </span>
+    )
 }
 
 export default Jobs;
