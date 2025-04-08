@@ -36,9 +36,9 @@ const Jobs = () =>{
             ) : (
                 <ul>
                 {jobs.map((job) => (
-                  <li key={job._id}>
+                  <li key={job.jobId}>
                     {/* Link to the job detail page */}
-                    <Link to={`/dashboard/jobs/${job._id}`}>{job._id}</Link>
+                    <Link to={`/dashboard/jobs/${job.jobId}`}>{job.jobId}</Link>
                   </li>
                 ))}
               </ul>

@@ -60,8 +60,6 @@ const fetchJobs = async () =>{
   }
 }
 
-//8c061d3939aab9cce1ba50434b37cc10
-
 const fetchJob = async (jobId) => {
   try {
     //TODO Add auth
