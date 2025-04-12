@@ -6,7 +6,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -20,15 +20,12 @@ const SignIn = () => {
       console.log("This the data: ");
       console.log(data);
       if (!response.ok) {
-        setError(data.msg); // Show error message from server
+        setError(data.msg);
       } else {
-        // Store the JWT token and user data in localStorage/sessionStorage
         localStorage.setItem('token', data.token);
-        // Optionally store user info as well
         localStorage.setItem('user', JSON.stringify(data.user));
 
-        // Redirect to the dashboard or another protected page
-        window.location.href = '/dashboard'; // Example route
+        window.location.href = '/dashboard';
       }
     } catch (error) {
       setError('Failed to log in');
@@ -42,7 +39,7 @@ const SignIn = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
         <Typography component="h1" variant="h5">Sign In</Typography>
         {error && <Typography color="error">{error}</Typography>}
-        <form onSubmit={handleSubmit} sx={{ width: '100%', marginTop: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', marginTop: 1 }}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -80,7 +77,7 @@ const SignIn = () => {
           >
             Sign In
           </Button>
-        </form>
+        </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <Link href="/signup" variant="body2" sx={{ cursor: 'pointer' }}>
             Don't have an account? Sign Up

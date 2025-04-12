@@ -1,30 +1,33 @@
+import { Job } from '../interfaces/Job';
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Jobs = () =>{
-    const [error, setError] = useState('');
-    const [jobs, setJobs] = useState([]);
 
+const Jobs = () =>{
+    const [jobs, setJobs] = useState<Job[]>([]);
     useEffect(() => {
-        const fetchJobs = async () =>{
+        const getJobs = async () =>{
             try {
                 const response = await fetch('http://localhost:5000/api/job/findjobs', {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 });
-                const data = await response.json();
-                setJobs(data.jobs);
                 if (response.ok) {
-                console.log(data);
+                    const { jobs } = await response.json();
+                    setJobs(jobs);
                 } else {
-                throw new Error(data.msg || 'Failed to validate API key');
+                    throw new Error('Failed to fetch jobs');
                 }
-            } catch (err) {
-                console.error(err.message);
+            } catch (error) {
+                if (error instanceof Error) {
+                  console.error(error.message);
+                } else {
+                  console.error('An unknown error occurred');
+                }
+              }
             }
-            }
-            fetchJobs();
+            getJobs();
         }, []);
 
     //I have to disclose the jobs through the API first
