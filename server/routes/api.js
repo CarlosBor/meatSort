@@ -15,7 +15,7 @@ router.get('/apikey', async (req, res) => {
     }
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId); // Use the decoded userId
+      const user = await User.findById(decoded.userId);
       if (!user) {
         return res.status(404).json({ msg: 'User not found' });
       }
@@ -26,7 +26,6 @@ router.get('/apikey', async (req, res) => {
     }
   });
   
-  // Assuming `apiKey` is passed in the body of the request
   router.post('/testendpoint', async (req, res) => {
     const { apiKey } = req.body;
 
@@ -35,14 +34,12 @@ router.get('/apikey', async (req, res) => {
     }
   
     try {
-      // Find the user with the matching apiKey
       const user = await User.findOne({ apiKey });
   
       if (!user) {
         return res.status(404).json({ msg: 'API key not found' });
       }
   
-      // If you find the user, you can respond accordingly
       res.json({ msg: 'API key is valid', user: { id: user._id, email: user.email } });
     } catch (error) {
       console.error(error);

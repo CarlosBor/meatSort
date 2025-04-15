@@ -37,7 +37,6 @@ router.post('/lorem', async (req, res) => {
       console.error(error);
       res.status(500).json({ msg: 'Server error.' });
     }
-
   });
 
   router.get('/:jobId', async (req, res) => {
@@ -65,10 +64,9 @@ router.post('/lorem', async (req, res) => {
     res.json({ message: 'Job marked as complete. Waiting for result.' });
   });
 
+  //EventSource Router
   router.get('/status/:jobId', async (req, res) => {
     const { jobId } = req.params;
-
-    //Job listener should go here
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');

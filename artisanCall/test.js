@@ -78,7 +78,7 @@ const fetchJob = async (jobId) => {
   }
 };
 
-const fetchArtisanLoremJob = async (comments) => {  
+const fetchArtisanLoremJob = async (comments) => {
   try {
     const response = await fetch('http://localhost:5000/api/job/lorem', {
       method: 'POST',
@@ -88,30 +88,34 @@ const fetchArtisanLoremJob = async (comments) => {
       body: JSON.stringify({ apiKey, comments })
     });
     const data = await response.json();
-    if (response.ok) {
-      console.log(data);
-    } else {
+    if (!response.ok) {
       throw new Error(data.msg || 'Failed to validate API key');
     }
     const jobId = data.job.jobId;
-    const eventSource = new EventSource(`http://localhost:5000/api/job/status/${jobId}`);
-  eventSource.onmessage = (event) => {
-    const jobData = JSON.parse(event.data);
-    console.log(jobData.status);
-    if (jobData.status === 'complete') {
-      console.log("Data is: ", jobData.result);
-      console.log("Finished");
-      eventSource.close();
-    }
-  };
-
+    return await waitForJob(jobId);
   } catch (err) {
     console.error(err.message);
   }
 };
 
+const waitForJob = async (jobId) => {
+  const eventSource = new EventSource(`http://localhost:5000/api/job/status/${jobId}`);
+  return new Promise((resolve, reject) => {
+    eventSource.onmessage = (event) => {
+      const jobData = JSON.parse(event.data);
+      if (jobData.status === 'complete') {
+        eventSource.close();
+        resolve(jobData.result);
+      }
+    };
+  });
+}
 // fetchTestEndpoint();
 // fetchLoremJob("Make it funny");
 // fetchJobs();
 // fetchJob('8c061d3939aab9cce1ba50434b37cc10');
-fetchArtisanLoremJob("Make it funny");
+(async () => {
+  const espera = await fetchArtisanLoremJob("Make it funny"); 
+  console.log("Hm");
+  console.log(espera);
+})();
