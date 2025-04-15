@@ -31,7 +31,7 @@ useEffect(() => {
 	getJob();
 }, [jobId]);
 
-const sendResponse = async () =>{
+const sendResponse = async (event: React.FormEvent<HTMLFormElement>) => {
 	event.preventDefault(); // This prevents the page from reloading
 	try{
 		console.log("Whatafac");
