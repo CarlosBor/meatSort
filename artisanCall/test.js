@@ -98,12 +98,37 @@ const fetchArtisanLoremJob = async (comments) => {
   }
 };
 
+const fetchDrawnLoremJob = async (comments) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/job/draw', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ apiKey, comments })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.msg || 'Failed to validate API key');
+    }
+    const jobId = data.job.jobId;
+    return await waitForJob(jobId);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
 const waitForJob = async (jobId) => {
   const eventSource = new EventSource(`http://localhost:5000/api/job/status/${jobId}`);
+  console.log("Reaches the wait");
   return new Promise((resolve, reject) => {
     eventSource.onmessage = (event) => {
+      console.log("Messages reach");
       const jobData = JSON.parse(event.data);
+      console.log("JobData is: ");
+      console.log(jobData);
       if (jobData.status === 'complete') {
+        console.log("Aight it actually completes WTF");
         eventSource.close();
         resolve(jobData.result);
       }
@@ -114,8 +139,11 @@ const waitForJob = async (jobId) => {
 // fetchLoremJob("Make it funny");
 // fetchJobs();
 // fetchJob('8c061d3939aab9cce1ba50434b37cc10');
+// const espera = await fetchArtisanLoremJob("Make it funny"); 
+
+
 (async () => {
-  const espera = await fetchArtisanLoremJob("Make it funny"); 
+  const espera = await fetchDrawnLoremJob("Draw me a cat");
   console.log("Hm");
   console.log(espera);
 })();

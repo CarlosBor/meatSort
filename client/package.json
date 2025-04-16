@@ -17,6 +17,7 @@
     "@mui/material": "^7.0.1",
     "@mui/styles": "^6.4.8",
     "react": "^19.0.0",
+    "react-canvas-draw": "^1.2.1",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.1"
   },

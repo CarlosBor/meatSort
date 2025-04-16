@@ -41,7 +41,8 @@ const Jobs = () =>{
                 {jobs.map((job) => (
                   <li key={job.jobId}>
                     {/* Link to the job detail page */}
-                    <Link to={`/dashboard/jobs/${job.jobId}`}>{job.jobId}</Link>
+                    {/* Type: {job.{job.payload.comments} */}
+                    <Link to={`/dashboard/jobs/${job.jobId}`}>Type: {job.type}</Link>
                   </li>
                 ))}
               </ul>

@@ -8,3 +8,7 @@ export interface Job {
   artisan: string | null;
   createdAt: Date;
 }
+
+export interface LoremFormProps {
+  jobId: string;
+}
