@@ -14,8 +14,8 @@
 // 6.- The client, if it gets the result, sends another query to the server to mark the job as complete.
 // 7.- If the client queries the same job again (which it can check because it's in localStorage), rather than requesting another job, it will get the previous one
 // 8.- For ease of use, this should be a library, npm let's fucking do it
-
+// 9.- Change usage of IDs with mongo IDs
 
 
 //TEST APIKEY:
-b6fff1fe3e18d0e6212a196b2140cf17e4207c2c48ef1e623a72148438016d73
+2e705feab915fc69b322c898f30210cb23c7447b4396d8fee9cdf459ea563170

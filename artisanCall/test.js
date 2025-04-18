@@ -1,4 +1,4 @@
-const apiKey = '1c595ee76f76f6cde0ad8d6bf430fba9922cc7b0b3cccd9d20dbcb804962980e';
+const apiKey = '2e705feab915fc69b322c898f30210cb23c7447b4396d8fee9cdf459ea563170';
 const {EventSource} = require('eventsource');
 
 const fetchTestEndpoint = async () => {  
@@ -139,11 +139,11 @@ const waitForJob = async (jobId) => {
 // fetchLoremJob("Make it funny");
 // fetchJobs();
 // fetchJob('8c061d3939aab9cce1ba50434b37cc10');
-// const espera = await fetchArtisanLoremJob("Make it funny"); 
+//   const espera = await fetchDrawnLoremJob("Draw me a cat");
 
 
 (async () => {
-  const espera = await fetchDrawnLoremJob("Draw me a cat");
+  const espera = await fetchArtisanLoremJob("Make it funny"); 
   console.log("Hm");
   console.log(espera);
 })();
