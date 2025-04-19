@@ -6,7 +6,7 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords don't match!");
@@ -42,7 +42,8 @@ const SignUp = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100vh',
+          justifyContent: 'center',
+          minHeight: '100vh',  // Ensures the Box takes up the full height of the screen
         }}
       >
         <Typography component="h1" variant="h5">

@@ -36,7 +36,15 @@ const SignIn = () => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',  // Ensures it takes the full height of the screen
+        }}
+      >
         <Typography component="h1" variant="h5">Sign In</Typography>
         {error && <Typography color="error">{error}</Typography>}
         <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%', marginTop: 1 }}>

@@ -122,6 +122,6 @@ const waitForJob = async (jobId, apiKey) => {
 // const espera = await fetchSortJob("lower to higher", [1,3,5,2]);
 
 (async () => {
-  const espera = await fetchArtisanLoremJob("Draw me a cat");
+  const espera = await fetchSortJob("Draw me a cat", [1,2,"casa",5]);
   console.log("valor de la peticion: ", espera);
 })();

@@ -4,7 +4,9 @@
 4.- Make queries reach the backend    	GOOD
 5.- Responses                         	GOOD
 6.- Change usage of IDs with mongo IDs  GOOD
-7.- Massive cleanup
+7.- Massive cleanup                     GOOD
+8.- Send the job completer to a thank you page (hide load time!)
+
 
 Here's the workflow:
 1.- The client makes a Job request.

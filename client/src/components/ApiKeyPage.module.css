@@ -1,4 +1,8 @@
-.apiKeyWrapper{
-    width:100vw;
-    min-height:800px;
-}
+.apiKeyWrapper {
+    background-color: #181818;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

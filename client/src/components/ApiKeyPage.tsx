@@ -18,7 +18,7 @@ const ApiKeyPage = () =>{
             const response = await fetch('http://localhost:5000/api/api/apikey', {
               method: 'GET',
               headers: {
-                'Authorization': `Bearer ${token}`, // Attach JWT
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
               },
             });
@@ -30,7 +30,7 @@ const ApiKeyPage = () =>{
             }
             setApiKey(data.apiKey);
           } catch (err) {
-            setError(err.message);
+            setError(err instanceof Error ? err.message : 'An unknown error occurred');
           }
         };
     
@@ -39,24 +39,34 @@ const ApiKeyPage = () =>{
 
     return(
         <div className={style.apiKeyWrapper}>
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
-                <Typography component="h1" variant="h5">Your API key</Typography>
-                {error && <Typography color="error">{error}</Typography>}
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '600px',
+                    bgcolor: '#282828',
+                    borderRadius: 2,
+                    boxShadow: 3,
+                    padding: 3
+                }}>
+                    <Typography component="h1" variant="h5">Your API Key</Typography>
+                    {error && <Typography color="error">{error}</Typography>}
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
                         id="APIkey"
-                        label="APIkey"
+                        label="API Key"
                         name="APIkey"
                         autoFocus
                         value={apiKey}
                         sx={{ marginTop: 2 }}
                     />
-            </Box>
+                </Box>
             </Container>
         </div>
     )
