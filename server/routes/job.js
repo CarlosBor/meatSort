@@ -1,16 +1,13 @@
 const express = require('express');
-const { jobEmitter } = require('../utils/jobEvents');
 const Job = require('../models/Job');
-const dotenv = require('dotenv');
+const { jobEmitter } = require('../utils/jobEvents');
 const validateApiKey = require('../utils/apiKeyValidator');
 
-dotenv.config();
 const router = express.Router();
 
-router.post('/lorem', async (req, res) => {
-    const { apiKey, comments } = req.body;
+router.post('/lorem', validateApiKey, async (req, res) => {
+    const { comments } = req.body;
     try{
-      await validateApiKey(apiKey);
       const job = await Job.registerJob("lorem", {comments});
       res.json({ msg: 'Job registered successfully', job });
     } catch (error) {
@@ -23,10 +20,9 @@ router.post('/lorem', async (req, res) => {
     }
   });
 
-  router.post('/draw', async (req, res) => {
-    const { apiKey, comments } = req.body;
+  router.post('/draw', validateApiKey, async (req, res) => {
+    const { comments } = req.body;
     try{
-      await validateApiKey(apiKey);
       const job = await Job.registerJob("draw", {comments});
       res.json({ msg: 'Job registered successfully', job });
     } catch (error) {
@@ -39,10 +35,9 @@ router.post('/lorem', async (req, res) => {
     }
   });
 
-  router.post('/sort', async (req, res) => {
-    const { apiKey, comments, sortable } = req.body;
+  router.post('/sort', validateApiKey, async (req, res) => {
+    const { comments, sortable } = req.body;
     try{
-      await validateApiKey(apiKey);
       const job = await Job.registerJob("sortable", {comments, sortable});
       res.json({ msg: 'Job registered successfully', job });
     } catch (error) {
@@ -61,7 +56,6 @@ router.post('/lorem', async (req, res) => {
       if (pendingJobs.length === 0) {
         return res.status(404).json({ msg: 'No pending jobs found.' });
       }
-  
       res.json({ jobs: pendingJobs });
     } catch (error) {
       console.error(error);
@@ -83,12 +77,10 @@ router.post('/lorem', async (req, res) => {
     }
   });
 
-  // API route to mark a job as complete
   router.post('/complete', async (req, res) => {
     const { jobId, result } = req.body;
     console.log("This is the result"); 
     console.log(result);
-    // Emit job completed event
     jobEmitter.emit('jobCompleted', { jobId, result });
     try {
       await Job.deleteOne({ _id:jobId });
@@ -99,8 +91,8 @@ router.post('/lorem', async (req, res) => {
     }
   });
 
-  //EventSource Router
-  router.get('/status/:jobId', async (req, res) => {
+  router.get('/status/:jobId', validateApiKey, async (req, res) => {
+    console.log("Reaches");
     const { jobId } = req.params;
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');

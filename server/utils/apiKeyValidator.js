@@ -1,18 +1,25 @@
-// utils/apiKeyValidator.js
-
 const User = require('../models/User');
 
-const validateApiKey = async (apiKey) => {
+const validateApiKey = async (req, res, next) => {
+  console.log(req.query);
+  const apiKey = (req.body && req.body.apiKey) || req.query.apiKey || req.headers['x-api-key'];
+
   if (!apiKey) {
-    throw new Error('API key is required');
+    return res.status(401).json({ msg: 'API key is required' });
   }
 
-  const user = await User.findOne({ apiKey });
-  if (!user) {
-    throw new Error('Invalid API key');
-  }
+  try {
 
-  return user;  // Return user info if the key is valid
+    const user = await User.findOne({ apiKey });
+    if (!user) {
+      return res.status(403).json({ msg: 'Invalid API key' });
+    }
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error during API key validation' });
+  }
 };
 
 module.exports = validateApiKey;

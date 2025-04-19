@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
 
 const JobSchema = new mongoose.Schema({
   type: { type: String, required: true },
