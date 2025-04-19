@@ -8,6 +8,7 @@ const LoremForm = (props:LoremFormProps) =>{
     
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log(props.jobId);
         sendResponse(props.jobId, loremResponse);    
     }
 

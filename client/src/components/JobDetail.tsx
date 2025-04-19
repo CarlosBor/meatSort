@@ -20,6 +20,7 @@ useEffect(() => {
 			});
 			const { job } = await response.json();
 			setJob(job);
+			console.log(job);
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
