@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 
 const JobSchema = new mongoose.Schema({
-  jobId: { type: String, unique: true,default: () => crypto.randomBytes(16).toString('hex') },
   type: { type: String, required: true },
   status: { type: String, enum: ['pending', 'in_progress', 'complete'], default: 'pending' },
   payload: { type: mongoose.Schema.Types.Mixed},

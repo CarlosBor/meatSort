@@ -5,9 +5,7 @@ const User = require('../models/User');
 const dotenv = require('dotenv');
 
 dotenv.config();
-//Test ACC:
-//    qweqweqwe
-//    qweqweqwe
+
 const router = express.Router();
 
 // Login Route

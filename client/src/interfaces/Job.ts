@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Job {
-  jobId: string;
+  _id: string;
   type: string;
   status: 'pending' | 'in_progress' | 'complete';
   payload: any;
@@ -9,6 +9,11 @@ export interface Job {
   createdAt: Date;
 }
 
-export interface LoremFormProps {
+export interface SimpleFormProps {
   jobId: string;
+}
+
+export interface SortableFormProps {
+  jobId: string;
+  sortable: any[];
 }

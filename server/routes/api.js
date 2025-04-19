@@ -25,26 +25,5 @@ router.get('/apikey', async (req, res) => {
       res.status(500).json({ msg: 'Server error' });
     }
   });
-  
-  router.post('/testendpoint', async (req, res) => {
-    const { apiKey } = req.body;
-
-    if (!apiKey) {
-      return res.status(400).json({ msg: 'API key is required' });
-    }
-  
-    try {
-      const user = await User.findOne({ apiKey });
-  
-      if (!user) {
-        return res.status(404).json({ msg: 'API key not found' });
-      }
-  
-      res.json({ msg: 'API key is valid', user: { id: user._id, email: user.email } });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ msg: 'Server error' });
-    }
-  });
 
   module.exports = router;

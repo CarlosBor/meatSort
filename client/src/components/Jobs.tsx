@@ -35,14 +35,12 @@ const Jobs = () =>{
     return(
         <span>
             {jobs.length === 0 ? (
-                <p>No jobs available (yet!)</p>
+                <p>All jobs completed!</p>
             ) : (
                 <ul>
                 {jobs.map((job) => (
-                  <li key={job.jobId}>
-                    {/* Link to the job detail page */}
-                    {/* Type: {job.{job.payload.comments} */}
-                    <Link to={`/dashboard/jobs/${job.jobId}`}>Type: {job.type}</Link>
+                  <li key={job._id}>
+                    <Link to={`/dashboard/jobs/${job._id}`}>Type: {job.type}</Link>
                   </li>
                 ))}
               </ul>

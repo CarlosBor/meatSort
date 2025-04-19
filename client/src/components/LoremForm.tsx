@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Button, TextareaAutosize} from '@mui/material';
 import { sendResponse } from '../utils/sendResponse';
-import { LoremFormProps } from "../interfaces/Job";
+import { SimpleFormProps } from "../interfaces/Job";
+import { useNavigate } from "react-router-dom";
 
-const LoremForm = (props:LoremFormProps) =>{
+const LoremForm = (props:SimpleFormProps) =>{
     const [loremResponse, setLoremResponse] = useState('');
+    const navigate = useNavigate();
     
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(props.jobId);
-        sendResponse(props.jobId, loremResponse);    
+        sendResponse(props.jobId, loremResponse);
+        navigate('/dashboard/jobs');
     }
 
     return(

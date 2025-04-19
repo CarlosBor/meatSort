@@ -4,7 +4,6 @@ const Job = require('../models/Job');
 const dotenv = require('dotenv');
 const validateApiKey = require('../utils/apiKeyValidator');
 
-
 dotenv.config();
 const router = express.Router();
 
@@ -40,6 +39,22 @@ router.post('/lorem', async (req, res) => {
     }
   });
 
+  router.post('/sort', async (req, res) => {
+    const { apiKey, comments, sortable } = req.body;
+    try{
+      await validateApiKey(apiKey);
+      const job = await Job.registerJob("sortable", {comments, sortable});
+      res.json({ msg: 'Job registered successfully', job });
+    } catch (error) {
+      if(error.message==='Invalid API key'){
+        res.status(400).json({ msg: 'Invalid API key' });
+      } else {
+        console.error(error);
+        res.status(500).json({ msg: 'Server error.' });
+      }
+    }
+  });
+
   router.get('/findjobs', async (req, res) => {
     try {
       const pendingJobs = await Job.find({ status: 'pending' });
@@ -57,7 +72,7 @@ router.post('/lorem', async (req, res) => {
   router.get('/:jobId', async (req, res) => {
     const { jobId } = req.params;
     try {
-      const job = await Job.findOne({jobId});
+      const job = await Job.findOne({_id:jobId});
       if (!job) {
         return res.status(404).json({ msg: 'Job not found' });
       }
@@ -71,12 +86,12 @@ router.post('/lorem', async (req, res) => {
   // API route to mark a job as complete
   router.post('/complete', async (req, res) => {
     const { jobId, result } = req.body;
+    console.log("This is the result"); 
+    console.log(result);
     // Emit job completed event
     jobEmitter.emit('jobCompleted', { jobId, result });
     try {
-      console.log("jobId in deletion", jobId);
-      // Delete the job from the collection
-      await Job.deleteOne({ jobId });
+      await Job.deleteOne({ _id:jobId });
       res.json({ message: 'Job marked as complete and deleted.' });
     } catch (error) {
       console.error(error);
@@ -93,9 +108,7 @@ router.post('/lorem', async (req, res) => {
 
     res.write(`data: ${JSON.stringify({ jobId, status: 'pending' })}\n\n`);
 
-    const handleJobCompleted = ({ jobId: completedId, result }) => {
-      console.log("completeId",completedId);
-      console.log("jobId",jobId);
+    const handleJobCompleted = ({ jobId:completedId, result }) => {
       if (completedId === jobId) {
         res.write(`data: ${JSON.stringify({ jobId, status: 'complete', result })}\n\n`);
         res.end();

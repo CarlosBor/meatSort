@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Job } from "../interfaces/Job";
 import LoremForm from "./LoremForm";
 import DrawForm from "./DrawForm";
+import SortForm from './sortForm';
 
 const JobDetail = () => {
   const { jobId } = useParams();
   //TODO Handle the any case
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [job, setJob] = useState<{ _id: string; status: string; payload: any } | null>(null);
+  const [job, setJob] = useState<Job | null>(null);
   
 useEffect(() => {
 	const getJob = async () => {
@@ -20,7 +22,6 @@ useEffect(() => {
 			});
 			const { job } = await response.json();
 			setJob(job);
-			console.log(job);
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
@@ -42,6 +43,7 @@ useEffect(() => {
 			<p>Comments: {JSON.stringify(job.payload.comments)}</p>
 			{job.type === "lorem" && <LoremForm jobId={job._id}/>}
 			{job.type === "draw" && <DrawForm jobId={job._id}/>}
+			{job.type === "sortable" && <SortForm jobId={job._id} sortable={job.payload.sortable}/>}
 		</div>
   	);
 };

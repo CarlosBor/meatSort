@@ -2,18 +2,16 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from '@mui/material';
 import { sendResponse } from '../utils/sendResponse';
-import { LoremFormProps } from "../interfaces/Job";
+import { SimpleFormProps } from "../interfaces/Job";
 import CanvasDraw from "react-canvas-draw";
 
-const LoremForm = (props:LoremFormProps) =>{
+const LoremForm = (props:SimpleFormProps) =>{
     const navigate = useNavigate();
     const canvasRef = useRef<CanvasDraw>(null);
     
     const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const drawData = canvasRef.current?.getSaveData();
-        console.log("This is props id: ", props.jobId)
-        console.log("This is the type of drawdata: ", typeof drawData)
         sendResponse(props.jobId, drawData);
         navigate('/dashboard/jobs');
     }
