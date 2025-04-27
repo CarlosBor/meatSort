@@ -23,12 +23,12 @@ This is a **monorepo** project developed with **Docker**, **Vite** (with **React
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/CarlosBor/meatSort
    ```
 
 2. **Navigate to the project directory:**
    ```bash
-   cd <project-directory>
+   cd https://github.com/CarlosBor/meatSort
    ```
 
 3. **Build and start the Docker containers:**
@@ -145,7 +145,7 @@ const fetchSortJob = async (comments, sortable) => {
 
 ## Contributing
 
-I wouldn't expect any contributions in a thousand years.
+I wouldn't expect any contributions in a thousand years. Please do something useful with your time instead.
 
 ## License
 
