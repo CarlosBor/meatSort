@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import mdx from "@mdx-js/rollup"
 
-// https://vite.dev/config/
+// Export config with plugins
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    mdx(),
+    react(),
+  ],
+});

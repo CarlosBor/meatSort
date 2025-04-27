@@ -10,6 +10,9 @@ const Dashboard = () => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Dashboard
           </Typography>
+          <Button component={Link} to="/dashboard/docs" color="inherit" sx={{ marginRight: 2, '&:hover': { backgroundColor: '#1976d2', color:"inherit"}}} >
+            Docs
+          </Button>
           <Button component={Link} to="/dashboard/apikey" color="inherit" sx={{ marginRight: 2, '&:hover': { backgroundColor: '#1976d2', color:"inherit"}}} >
             API Keys
           </Button>

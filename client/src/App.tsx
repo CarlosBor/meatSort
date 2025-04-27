@@ -8,6 +8,8 @@ import ApiKeyPage from './components/ApiKeyPage';
 import Jobs from './components/Jobs';
 import JobDetail from './components/JobDetail';
 import style from './App.module.css';
+import DocsPage from './components/DocsPage';
+
 
 const theme = createTheme({
   palette: {
@@ -36,6 +38,7 @@ function App() {
           <SignUp />
         </div>} />
         <Route path="/dashboard" element={<div className={style.loginWrapper}><Dashboard /></div>}>
+          <Route path="docs" element={<DocsPage />} /> {/* Nested Route */}
           <Route path="apikey" element={<ApiKeyPage />} /> {/* Nested Route */}
           <Route path="jobs" element={<Jobs />} /> {/* Nested Route */}
           <Route path="jobs/:jobId" element={<JobDetail />} /> {/* New Route for job details */}

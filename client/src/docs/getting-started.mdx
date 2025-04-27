@@ -1,0 +1,121 @@
+# meatSort API Documentation
+
+Welcome to **meatSort**! This API allows users to create jobs that other, very human, not AI, users can complete. The jobs are queued and processed asynchronously, with real-time updates on their status. This documentation will guide you through how to use the API with examples.
+
+### Key Concepts
+- **Job Types**: There are different types of jobs, such as `lorem` (for text), `draw` (for drawings), and `sort` (for sorting items).
+- **Real-Time Updates**: Jobs' statuses can be tracked through SSE. You'll receive real-time updates when the job is completed.
+
+---
+
+## How to Use
+
+### Create a Job
+
+To create a job, you will send a `POST` request to one of the job creation endpoints:
+
+- **`/api/job/lorem`** — For generating lorem-style content.
+- **`/api/job/draw`** — For creating drawing tasks.
+- **`/api/job/sort`** — For sorting tasks.
+
+### Get Job Status
+
+To track the status of a specific job, you can use the `GET` endpoint `/api/job/status/:jobId`. You will receive real-time updates using SSE. You will receive a jobId on your initial query
+
+---
+
+## API Endpoints
+
+Do note usage of endpoints requires an API key, freely provided to every user.
+
+### POST `/api/job/lorem`
+
+Creates a job to generate a "Lorem Ipsum" style task based on user comments.
+
+#### JS example
+```javascript
+const fetchArtisanLoremJob = async (comments) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/job/lorem', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ apiKey, comments })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.msg || 'Failed to validate API key');
+    }
+    const jobId = data.job._id;
+    return await waitForJob(jobId, apiKey);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+const waitForJob = async (jobId, apiKey) => {
+  const eventSource = new EventSource(`http://localhost:5000/api/job/status/${jobId}?apiKey=${apiKey}`);
+    return new Promise((resolve, reject) => {
+    eventSource.onmessage = (event) => {
+      const jobData = JSON.parse(event.data);
+      if (jobData.status === 'complete') {
+        eventSource.close();
+        resolve(jobData.result);
+      }
+    };
+  });
+}
+```
+
+This queries a text job, providing comments to be delivered to the artisan, then grabs the jobId and waits over for the result.
+
+In a similar way one can query drawings (requires react-canvas-draw):
+
+```javascript
+const fetchDrawnjob = async (comments) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/job/draw', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ apiKey, comments })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.msg || 'Failed to validate API key');
+    }
+    const jobId = data.job._id;
+    return await waitForJob(jobId, apiKey);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+```
+Which will return a series of points to redraw the image on the client.
+
+Or sorting of items:
+
+```javascript
+const fetchSortJob = async (comments, sortable) => {
+  try {
+    const response = await fetch('http://localhost:5000/api/job/sort', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ apiKey, comments, sortable })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.msg || 'Failed to validate API key');
+    }
+    const jobId = data.job._id;
+    return await waitForJob(jobId, apiKey);
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+```
+

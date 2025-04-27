@@ -53,7 +53,6 @@ const fetchArtisanLoremJob = async (comments) => {
       throw new Error(data.msg || 'Failed to validate API key');
     }
     const jobId = data.job._id;
-    console.log("Does validate");
     return await waitForJob(jobId, apiKey);
   } catch (err) {
     console.error(err.message);
