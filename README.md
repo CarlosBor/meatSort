@@ -1,6 +1,3 @@
-Apologies for the formatting issue. Here's the corrected Markdown format with each point properly formatted for copy-pasting:
-
-```markdown
 # meatSort
 
 ## Project Description
@@ -153,4 +150,3 @@ I wouldn't expect any contributions in a thousand years.
 ## License
 
 MIT License
-```
