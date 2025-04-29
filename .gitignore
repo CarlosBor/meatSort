@@ -17,6 +17,9 @@ server/dist/
 server/.env
 server/node_modules
 
+# testing omittable
+queryExamples/node_modules
+
 # Log files
 *.log
 
