@@ -1,4 +1,4 @@
-const apiKey = 'b2b53bd45a55d897068125ae451620bec59272ca57ed4beabc0b33d9a623613b';
+const apiKey = '1f4b1d81227298c528c3340f0d8bb29555f1eaefebbba8560d0aa1665be10f84';
 const {EventSource} = require('eventsource');
 
 const fetchLoremJob = async (comments) => {  
